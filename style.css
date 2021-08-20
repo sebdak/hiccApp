@@ -1,0 +1,109 @@
+:root {
+  --color-hl: #fca311;
+  --border-radius: 3px;
+}
+
+*,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: #2b2d42;
+  background-color: #e5e5e5;
+  max-width: 40rem;
+  margin: auto;
+  padding: 2rem 2rem;
+}
+
+/* ------------ */
+/* HEADER STUFF */
+/* ------------ */
+
+header {
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+header h1 {
+  font-size: 5rem;
+}
+
+header h1::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 40;
+  left: 20;
+  z-index: -1;
+  width: 15rem;
+  height: 3rem;
+  opacity: 0.8;
+  background-color: var(--color-hl);
+}
+
+header #pronounciation {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+header blockquote {
+  font-style: italic;
+}
+
+/* ---------- */
+/* MAIN STUFF */
+/* ---------- */
+
+main {
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 3rem;
+}
+
+/* ---------- */
+/* FORM STUFF */
+/* ---------- */
+
+form {
+  padding: 2rem;
+  border: 1px solid black;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+form .input-elements > * {
+  cursor: pointer;
+}
+
+form button {
+  background-color: var(--color-hl);
+  border: 0;
+  border-radius: var(--border-radius);
+  padding: 0.5rem 1.5rem;
+}
+
+form button:hover {
+  cursor: pointer;
+}
+
+/* ----------- */
+/* CHART STUFF */
+/* ----------- */
+
+#myChart {
+  margin-top: 5rem;
+}
+
+/* ------------ */
+/* FOOTER STUFF */
+/* ------------ */
+
+footer {
+  text-align: center;
+}

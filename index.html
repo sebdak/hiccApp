@@ -1,58 +1,37 @@
 <html>
   <head>
+    <link rel="stylesheet" href="style.css" />
+    <title>hiccApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.0/dist/chart.min.js"></script>
-    <script>
-      const SUPABASE_URL = "https://hrmjrnjaxrixkifmoazl.supabase.co";
-      const SUPABASE_KEY =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyOTIyNjg4OCwiZXhwIjoxOTQ0ODAyODg4fQ.LVeJO-IZul7a386V5C9ONeawtikt2OOUd_Fk2bTgNWc";
-      var supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-      var supabaseToken = window.localStorage.getItem("supabaseToken");
-
-      function handleLogin(event) {
-        const email = event.target.elements.email.value;
-        const password = event.target.elements.password.value;
-
-        supabase.auth
-          .signIn({ email, password })
-          .then((response) => {
-            response.error
-              ? alert(response.error.message)
-              : console.log(response);
-          })
-          .catch((err) => {
-            alert(err.response.text);
-          });
-      }
-
-      function isSignedIn() {
-        return !!supabase.auth.currentSession;
-      }
-
-      async function handleSubmitHiccup(event) {
-        const isDrunk = event.target.elements.drunk.checked;
-        const { data, error } = await supabase
-          .from("hiccups")
-          .insert({ drunk: isDrunk });
-        if (error) {
-          alert(error.message);
-        } else {
-          alert("Successfully inserted hiccup timestamp in database");
-        }
-      }
-    </script>
+    <script src="index.js"></script>
+    <script defer src="chart.js"></script>
     <script
       defer
       src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
   </head>
   <body>
-    <div x-data="{message: 'test'}">
+    <header>
+      <h1>Hiccup</h1>
+      <p aria-details="Pronounciation" id="pronounciation">/ˈhɪkəp</p>
+      <blockquote aria-details="Discription">
+        A hiccup (scientific name singultus, from a Latin word meaning "to catch
+        one's breath while sobbing";[1] also spelled hiccough) is an involuntary
+        contraction (myoclonic jerk) of the diaphragm that may repeat several
+        times per minute. The hiccup is an involuntary action involving a reflex
+        arc.[2] Once triggered, the reflex causes a strong contraction of the
+        diaphragm followed about a quarter of a second later by closure of the
+        vocal cords, which results in the "hic" sound.
+      </blockquote>
+    </header>
+
+    <main id="login" x-data="{message: 'test'}">
       <!-- LOGIN FORM -->
-      <template x-if="isSignedIn() == null">
+      <template x-if="!isSignedIn()">
         <form @submit.prevent="handleLogin">
-          <h1>Login</h1>
+          <h2>Login</h2>
 
           <div class="input-elements">
             <input
@@ -77,76 +56,20 @@
       <!-- SUMBIT HICCUP -->
       <template x-if="isSignedIn()">
         <div>
-          <h1>Register hiccup</h1>
           <form @submit.prevent="handleSubmitHiccup">
-            <label for="drunk">Am I drunk?</label>
-            <input type="checkbox" name="drunk" id="drunk" />
+            <h2>Register hiccup</h2>
+            <div class="input-elements">
+              <label for="drunk">Am I drunk?</label>
+              <input type="checkbox" name="drunk" id="drunk" />
+            </div>
             <button>Submit hiccup</button>
           </form>
         </div>
       </template>
-    </div>
 
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <script>
-      var ctx = document.getElementById("myChart").getContext("2d");
-      var myChart = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-          datasets: [
-            {
-              label: "Hiccups by time of day (sober)",
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: [
-                "rgba(255, 99, 132, 0.2)",
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(255, 206, 86, 0.2)",
-                "rgba(75, 192, 192, 0.2)",
-                "rgba(153, 102, 255, 0.2)",
-                "rgba(255, 159, 64, 0.2)",
-              ],
-              borderColor: [
-                "rgba(255, 99, 132, 1)",
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 206, 86, 1)",
-                "rgba(75, 192, 192, 1)",
-                "rgba(153, 102, 255, 1)",
-                "rgba(255, 159, 64, 1)",
-              ],
-              borderWidth: 1,
-            },
-            {
-              label: "Hiccups by time of day (drunk)",
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: [
-                "rgba(255, 99, 132, 0.2)",
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(255, 206, 86, 0.2)",
-                "rgba(75, 192, 192, 0.2)",
-                "rgba(153, 102, 255, 0.2)",
-                "rgba(255, 159, 64, 0.2)",
-              ],
-              borderColor: [
-                "rgba(255, 99, 132, 1)",
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 206, 86, 1)",
-                "rgba(75, 192, 192, 1)",
-                "rgba(153, 102, 255, 1)",
-                "rgba(255, 159, 64, 1)",
-              ],
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        },
-      });
-    </script>
+      <canvas id="myChart" width="400" height="400"></canvas>
+    </main>
+
+    <footer>Sebastian Knudsen 2021</footer>
   </body>
 </html>
