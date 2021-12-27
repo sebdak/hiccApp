@@ -77,6 +77,18 @@ form {
   gap: 2rem;
 }
 
+form input {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid black;
+}
+
+form input[type="email"],
+form input[type="password"] {
+  display: block;
+}
+
 form .input-elements > * {
   cursor: pointer;
 }
@@ -96,7 +108,7 @@ form button:hover {
 /* CHART STUFF */
 /* ----------- */
 
-#myChart {
+canvas {
   margin-top: 5rem;
 }
 

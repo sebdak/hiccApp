@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.0/dist/chart.min.js"></script>
-    <script src="index.js"></script>
-    <script defer src="chart.js"></script>
-    <script
-      defer
-      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
-    ></script>
+    <script type="module" src="src/index.js"></script>
   </head>
   <body>
     <header>
@@ -27,47 +22,8 @@
       </blockquote>
     </header>
 
-    <main id="login" x-data="{message: 'test'}">
-      <!-- LOGIN FORM -->
-      <template x-if="!isSignedIn()">
-        <form @submit.prevent="handleLogin">
-          <h2>Login</h2>
-
-          <div class="input-elements">
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              required
-              autocomplete="false"
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              required
-            />
-          </div>
-
-          <button type="submit">Login</button>
-        </form>
-      </template>
-
-      <!-- SUMBIT HICCUP -->
-      <template x-if="isSignedIn()">
-        <div>
-          <form @submit.prevent="handleSubmitHiccup">
-            <h2>Register hiccup</h2>
-            <div class="input-elements">
-              <label for="drunk">Am I drunk?</label>
-              <input type="checkbox" name="drunk" id="drunk" />
-            </div>
-            <button>Submit hiccup</button>
-          </form>
-        </div>
-      </template>
-
-      <canvas id="myChart" width="400" height="400"></canvas>
+    <main id="root">
+      <div style="text-align: center" aria-busy="true">Loading...</div>
     </main>
 
     <footer>Sebastian Knudsen 2021</footer>
